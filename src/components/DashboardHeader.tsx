@@ -1,16 +1,13 @@
 
 import React from "react";
-import { Calendar, Filter } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { FilterDropdown } from "@/components/FilterDropdown";
 // import Round from "@/lib/api";
-import { Project, Round } from "@/hooks/useGraphQLData";
+import { Project } from "@/hooks/useGraphQLData";
 
 
 interface DashboardHeaderProps {
   title: string;
   subtitle?: string;
-  dataType: string;
   onProgramChange: (type: string) => void;
   programs: Project[];
   selectedProgram: string;
@@ -19,7 +16,6 @@ interface DashboardHeaderProps {
 export function DashboardHeader({
   title,
   subtitle,
-  dataType,
   onProgramChange,
   programs,
   selectedProgram

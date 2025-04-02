@@ -1,12 +1,11 @@
 import React from 'react';
-import { TableItem } from '@/hooks/useGraphQLData';
 import { Table, TableCaption, TableRow, TableHead, TableHeader, TableCell, TableBody } from './ui/table';
 import { cn } from '@/lib/utils';
 
 
 interface SimpleTableProps {
-    // data: TableItem[];
     headers: string[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     rows: Record<string, any>[] | undefined;
     caption: string;
     className?: string;

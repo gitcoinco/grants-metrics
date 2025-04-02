@@ -1,8 +1,6 @@
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchGraphQL, QUERIES, getMockData } from "@/lib/api";
-
-const USE_MOCK_DATA = true; // Set to false when your API is ready
+import { fetchGraphQL, QUERIES } from "@/lib/api";
 
 // Define the types for our API responses
 export interface Metrics {
@@ -40,17 +38,6 @@ export interface TableData {
   data: TableItem[];
 }
 
-interface MetricsResponse {
-  metrics: Metrics;
-}
-
-interface ChartDataResponse {
-  chartData: ChartData;
-}
-
-interface TableDataResponse {
-  tableData: TableData;
-}
 
 interface RoundsResponse {
   rounds: Round[];
@@ -140,47 +127,6 @@ export function useDonations(roundIds: string[] | undefined) {
     queryKey: ["donations", roundIds],
     queryFn: async () => {
      return fetchGraphQL<RoundsResponse>(QUERIES.GET_DONATIONS, {"_in":  roundIds});
-    },
-  });
-}
-
-
-
-export function useMetrics(period: string) {
-  return useQuery<MetricsResponse>({
-    queryKey: ["metrics", period],
-    queryFn: async () => {
-      if (USE_MOCK_DATA) {
-        return getMockData<MetricsResponse>("GET_METRICS", { period });
-      }
-
-      return fetchGraphQL<MetricsResponse>(QUERIES.GET_METRICS, { period });
-    },
-  });
-}
-
-export function useChartData(type: string, period: string) {
-  return useQuery<ChartDataResponse>({
-    queryKey: ["chartData", type, period],
-    queryFn: async () => {
-      if (USE_MOCK_DATA) {
-        return getMockData<ChartDataResponse>("GET_CHART_DATA", { type, period });
-      }
-
-      return fetchGraphQL<ChartDataResponse>(QUERIES.GET_CHART_DATA, { type, period });
-    },
-  });
-}
-
-export function useTableData(type: string, limit: number = 10, page: number = 1) {
-  return useQuery<TableDataResponse>({
-    queryKey: ["tableData", type, limit, page],
-    queryFn: async () => {
-      if (USE_MOCK_DATA) {
-        return getMockData<TableDataResponse>("GET_TABLE_DATA", { type, limit, page });
-      }
-
-      return fetchGraphQL<TableDataResponse>(QUERIES.GET_TABLE_DATA, { type, limit, page });
     },
   });
 }

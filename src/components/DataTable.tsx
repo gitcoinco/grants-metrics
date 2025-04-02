@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 interface TableColumn {
   key: string;
   title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render?: (value: any, row: any) => React.ReactNode;
   width?: string;
 }
@@ -14,6 +15,7 @@ interface TableColumn {
 interface DataTableProps {
   title?: string;
   columns: TableColumn[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
   isLoading?: boolean;
   totalCount?: number;

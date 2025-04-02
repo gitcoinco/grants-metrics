@@ -22,6 +22,7 @@ interface ChartContainerProps {
   title: string;
   subtitle?: string;
   type: "line" | "bar" | "area" | "pie";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
   xKey?: string;
   yKey?: string;
@@ -44,7 +45,6 @@ export function ChartContainer({
   colors = ["#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe"],
   isLoading = false,
   className,
-  height = 300,
   valueFormatter = (value: number) => `${value}`,
 }: ChartContainerProps) {
   const renderChart = () => {

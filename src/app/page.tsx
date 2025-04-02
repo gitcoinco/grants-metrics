@@ -2,99 +2,22 @@
 
 
 import React, { useState } from "react";
-import { Users, DollarSign, Activity, FileText, ArrowUpRight, Layers } from "lucide-react";
+import { Users, DollarSign, Activity, ArrowUpRight } from "lucide-react";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { MetricCard } from "@/components/MetricCard";
-import { ChartContainer } from "@/components/ChartContainer";
-import { DataTable } from "@/components/DataTable";
-import { useMetrics, useChartData, useTableData, TableItem, useProgramsAndRounds, extractRoundsAndPrograms, useAggregates, useDonations } from "@/hooks/useGraphQLData";
+import { useProgramsAndRounds, extractRoundsAndPrograms, useAggregates, useDonations } from "@/hooks/useGraphQLData";
 import { SimpleTable } from "@/components/SimpleTable";
 
 const Dashboard = () => {
-  const [period, setPeriod] = useState("30d");
-  const [dataType, setDataType] = useState("all");
-  const [page, setPage] = useState(1);
-
 
   const [selectedProgramId, setSelectedProgramId] = useState("all");
 
-
-  const { data: metricsData, isLoading: isLoadingMetrics } = useMetrics(period);
-  const { data: chartData, isLoading: isLoadingChart } = useChartData(dataType, period);
-  const { data: tableData, isLoading: isLoadingTable } = useTableData(dataType, 10, page);
-
-  const { data: programsAndRounds, isLoading: isLoadingPandR } = useProgramsAndRounds();
+  const { data: programsAndRounds } = useProgramsAndRounds();
   const { uniquePrograms, rounds } = extractRoundsAndPrograms(programsAndRounds);
 
-  const { data: aggregatesData, isLoading: isLoadingAggregates } = useAggregates(rounds.filter((round) => round.projectId === selectedProgramId)?.map((round) => round.id));
-  const { data: donationsData, isLoading: isLoadingDonations} = useDonations(rounds.filter((round) => round.projectId === selectedProgramId)?.map((round) => round.id));
+  const { data: aggregatesData} = useAggregates(rounds.filter((round) => round.projectId === selectedProgramId)?.map((round) => round.id));
+  const { data: donationsData } = useDonations(rounds.filter((round) => round.projectId === selectedProgramId)?.map((round) => round.id));
 
-
-  
-
-  // Sample chart data for development
-  const sampleAreaData = [
-    { name: "Jan", users: 4000, revenue: 2400 },
-    { name: "Feb", users: 3000, revenue: 1398 },
-    { name: "Mar", users: 2000, revenue: 9800 },
-    { name: "Apr", users: 2780, revenue: 3908 },
-    { name: "May", users: 1890, revenue: 4800 },
-    { name: "Jun", users: 2390, revenue: 3800 },
-    { name: "Jul", users: 3490, revenue: 4300 },
-  ];
-
-  const pieData = [
-    { name: "Chrome", value: 60 },
-    { name: "Safari", value: 20 },
-    { name: "Firefox", value: 10 },
-    { name: "Edge", value: 7 },
-    { name: "Others", value: 3 },
-  ];
-
-  const columns = [
-    {
-      key: "id",
-      title: "ID",
-      width: "15%",
-    },
-    {
-      key: "name",
-      title: "Name",
-      width: "20%",
-      render: (value: string) => <span className="font-medium">{value}</span>,
-    },
-    {
-      key: "email",
-      title: "Email",
-      width: "25%",
-    },
-    {
-      key: "status",
-      title: "Status",
-      width: "15%",
-      render: (value: string) => (
-        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${value === "active"
-          ? "bg-green-100 text-green-800"
-          : value === "inactive"
-            ? "bg-gray-100 text-gray-800"
-            : "bg-yellow-100 text-yellow-800"
-          }`}>
-          {value}
-        </div>
-      ),
-    },
-    {
-      key: "date",
-      title: "Date",
-      width: "15%",
-      render: (value: string) => new Date(value).toLocaleDateString(),
-    },
-    {
-      key: "value",
-      title: "Value",
-      width: "10%",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-12">
@@ -102,12 +25,9 @@ const Dashboard = () => {
         <DashboardHeader
           title="Analytics Dashboard"
           subtitle="Monitor your key metrics and performance indicators"
-          dataType={dataType}
-          // onDataTypeChange={setDataType}
           programs={uniquePrograms}
           onProgramChange={setSelectedProgramId}
           selectedProgram={selectedProgramId}
-        // rounds={rounds}
         />
    
 
