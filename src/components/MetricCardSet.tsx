@@ -14,7 +14,7 @@ export function MetricCardSet({
 } : MetricCardSetProps) {
 
   const { data: programsAndRounds } = useProgramsAndRounds();
-  const { uniquePrograms, rounds } = extractRoundsAndPrograms(programsAndRounds);
+  const { rounds } = extractRoundsAndPrograms(programsAndRounds);
 
   const { data: aggregatesData } = useAggregates(rounds.filter((round) => round.projectId === selectedProgramId)?.map((round) => round.id));
 

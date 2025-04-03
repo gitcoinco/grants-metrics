@@ -2,10 +2,10 @@
 
 
 import React, { useState } from "react";
-import { Users, DollarSign, Activity, ArrowUpRight } from "lucide-react";
+
 import { DashboardHeader } from "@/components/DashboardHeader";
-import { MetricCard } from "@/components/MetricCard";
-import { useProgramsAndRounds, extractRoundsAndPrograms, useAggregates, useDonations } from "@/hooks/useGraphQLData";
+
+import { useProgramsAndRounds, extractRoundsAndPrograms, useDonations } from "@/hooks/useGraphQLData";
 import { SimpleTable } from "@/components/SimpleTable";
 import { MetricCardSet } from "@/components/MetricCardSet";
 
@@ -46,7 +46,7 @@ const Dashboard = () => {
             headers={["Round Name", "Round Id" ]}
             rows={
               donationsData?.rounds.map((round) => {
-                const sum = round.donations.reduce((acc, donation) => acc + donation.amountInUsd, 0);
+                // const sum = round.donations.reduce((acc, donation) => acc + donation.amountInUsd, 0);
               return {
                 RoundName: round.roundMetadata?.name, 
                 RoundId: round.id,
