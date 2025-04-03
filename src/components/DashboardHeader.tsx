@@ -23,7 +23,7 @@ export function DashboardHeader({
 
 
   const programOptions = [
-    { label: "All programs", value: "all" },
+    // { label: "Select a Program", value: "none" },
     ...programs.map((program) => ({ label: program.metadata.name, value: program.id })),
   ];
 
@@ -32,9 +32,7 @@ export function DashboardHeader({
     <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl p-6 shadow-subtle mb-6 animate-fade-in">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary mb-2 inline-block">
-            Dashboard
-          </span>
+  
           <h1 className="text-2xl font-semibold">{title}</h1>
           {subtitle && <p className="text-muted-foreground text-sm mt-1">{subtitle}</p>}
         </div>
@@ -44,8 +42,8 @@ export function DashboardHeader({
             options={programOptions}
             value={selectedProgram}
             onChange={onProgramChange}
-            placeholder="Select data type"
-            className="w-full sm:w-48"
+            placeholder="Select a Program"
+            className="md:min-w-96 sm:w-48"
           />
           
           {/* <FilterDropdown

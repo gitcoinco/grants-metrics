@@ -50,6 +50,7 @@ interface AggregatesResponse {
         matchAmount: number;
         totalDonationsCount: number;
         uniqueDonorsCount: number;
+        totalAmountDonatedInUsd: number;
       };
     };
   };

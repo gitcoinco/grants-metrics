@@ -76,6 +76,7 @@ export const QUERIES = {
             matchAmount
             totalDonationsCount
             uniqueDonorsCount
+            totalAmountDonatedInUsd
           }
         }
       }

@@ -7,15 +7,18 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { MetricCard } from "@/components/MetricCard";
 import { useProgramsAndRounds, extractRoundsAndPrograms, useAggregates, useDonations } from "@/hooks/useGraphQLData";
 import { SimpleTable } from "@/components/SimpleTable";
+import { MetricCardSet } from "@/components/MetricCardSet";
 
 const Dashboard = () => {
 
-  const [selectedProgramId, setSelectedProgramId] = useState("all");
+  const [selectedProgramId, setSelectedProgramId] = useState("none");
+
+  
 
   const { data: programsAndRounds } = useProgramsAndRounds();
   const { uniquePrograms, rounds } = extractRoundsAndPrograms(programsAndRounds);
 
-  const { data: aggregatesData} = useAggregates(rounds.filter((round) => round.projectId === selectedProgramId)?.map((round) => round.id));
+  
   const { data: donationsData } = useDonations(rounds.filter((round) => round.projectId === selectedProgramId)?.map((round) => round.id));
 
 
@@ -23,59 +26,31 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <DashboardHeader
-          title="Analytics Dashboard"
-          subtitle="Monitor your key metrics and performance indicators"
+          title="Gitcoin Grants Programs"
+          subtitle="Monitor your key metrics and performance indicators for Gitcoin Grants programs."
           programs={uniquePrograms}
           onProgramChange={setSelectedProgramId}
           selectedProgram={selectedProgramId}
         />
+
+    
    
 
         {/* Metrics Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <MetricCard
-            title="Match Amount in USD"
-            value={aggregatesData?.roundsAggregate.aggregate.sum.matchAmount ?? "--"}
-            icon={DollarSign}
-            iconColor="text-blue-500"
-            delay={0.1}
-          />
-          <MetricCard
-            title="Donation Count"
-            value={aggregatesData?.roundsAggregate.aggregate.sum.totalDonationsCount ?? "--"}
-            icon={Activity}
-            iconColor="text-green-500"
-            delay={0.2}
-          />
-          <MetricCard
-            title="Unique Donors"
-            value={aggregatesData?.roundsAggregate.aggregate.sum.uniqueDonorsCount ?? "--"}
-            icon={Users}
-            iconColor="text-amber-500"
-            delay={0.3}
-          />
-          <MetricCard
-            title="Total Donated"
-            value={
-              donationsData?.rounds
-          ?.reduce((acc, round) => acc + round.donations.reduce((sum, donation) => sum + donation.amountInUsd, 0), 0) ?? "--"
-            }
-            icon={ArrowUpRight}
-            iconColor="text-indigo-500"
-            delay={0.4}
-          />
-        </div>
+
+        <MetricCardSet selectedProgramId={selectedProgramId} />
+
 
         <div className="grid grid-cols-1  gap-6 mb-6">
           <SimpleTable 
-            headers={["Round Name", "Round Id","Total Donations" ]}
+            headers={["Round Name", "Round Id" ]}
             rows={
               donationsData?.rounds.map((round) => {
                 const sum = round.donations.reduce((acc, donation) => acc + donation.amountInUsd, 0);
               return {
                 RoundName: round.roundMetadata?.name, 
                 RoundId: round.id,
-                TotalDonations: sum,
+                // TotalDonations: sum,
               }
             })}
             caption="All Rounds in the Program." 

@@ -51,9 +51,8 @@ export function FilterDropdown({
         </PopoverTrigger>
         <PopoverContent className="w-full p-0 backdrop-blur-md bg-white/95 dark:bg-gray-900/95 border border-gray-200 dark:border-gray-800 shadow-lg rounded-lg">
           <Command>
-            <CommandInput placeholder={`Search ${placeholder.toLowerCase()}...`} className="h-9" />
+            {/* <CommandInput placeholder={`Search ${placeholder.toLowerCase()}...`} className="h-9" /> */}
             <CommandList>
-              <CommandEmpty>No result found.</CommandEmpty>
               <CommandGroup>
                 {options.map((option) => (
                   <CommandItem
